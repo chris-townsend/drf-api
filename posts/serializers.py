@@ -8,8 +8,8 @@ class PostSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
 
-    def validate_image(self, obj):
-        if value.size > 1024 * 1024 * 2 :
+    def validate_image(self, value):
+        if value.size > 2 * 1024 * 1024:
             raise serializers.ValidationError(
                 'Image size larger then 2MB!'
             )
@@ -23,7 +23,6 @@ class PostSerializer(serializers.ModelSerializer):
             )
         return value
 
-
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
@@ -32,4 +31,4 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
-            'created_date', 'updated_date', 'title', 'content', 'image', 'image_filter']
+            'created_at', 'updated_at', 'title', 'content', 'image', 'image_filter']
