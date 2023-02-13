@@ -1,4 +1,3 @@
-
 from rest_framework import generics, permissions
 from .models import Post
 from .serializers import PostSerializer
